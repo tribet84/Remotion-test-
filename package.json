@@ -1,0 +1,24 @@
+{
+  "name": "madeira-vacation-video",
+  "version": "1.0.0",
+  "description": "Vídeo cinemático de prueba de vacaciones en Madeira hecho con Remotion",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "dev": "remotion studio",
+    "studio": "remotion studio",
+    "render": "remotion render Madeira out/madeira.mp4",
+    "upgrade": "remotion upgrade"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.477",
+    "@remotion/transitions": "4.0.477",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "remotion": "4.0.477"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.7",
+    "typescript": "5.8.3"
+  }
+}
