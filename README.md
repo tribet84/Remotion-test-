@@ -1,63 +1,51 @@
-# 🌺 Vídeo de vacaciones en Madeira — Remotion
+# 🌺 Madeira — Vídeo promocional (Remotion)
 
-Vídeo cinemático de prueba (vertical **1080×1920**, **30 s**, 30 fps) creado con
-[Remotion](https://www.remotion.dev/). Pensado para Reels / TikTok / Stories.
-
-Incluye intro, 6 escenas de localizaciones de Madeira con efecto **Ken Burns**
-(zoom + paneo) y fundidos cinemáticos, y una tarjeta final.
+Promo vertical **1080×1920**, **~35 s**, 30 fps, estilo moderno y dinámico:
+intro con animación de marca, **3 secciones temáticas** (Natureza · Oceano ·
+Vida & Sabor), **12 fotos** reales con efecto Ken Burns y dos tipos de plano
+(a sangre y tarjeta editorial), tipografía cinética, lower-thirds animados,
+barra de progreso, transiciones variadas (slide/wipe/fade), grano de cine y
+una outro con tira de miniaturas.
 
 ## 🚀 Uso
 
 ```bash
 npm install
-npm run studio     # Abre Remotion Studio para previsualizar y editar en vivo
-npm run render     # Renderiza a out/madeira.mp4
+npm run studio     # Remotion Studio: previsualizar y editar en vivo
+npm run render     # Renderiza a out/madeira-promo.mp4
 ```
 
-## 🖼️ Añadir TUS fotos y vídeos de Madeira
+> En entornos sin descarga de Chromium, pásale un navegador instalado:
+> `npx remotion render Madeira out/madeira-promo.mp4 --browser-executable=/ruta/a/chrome`
 
-Ahora mismo el vídeo usa **degradados de marcador de posición** para poder
-renderizar sin archivos. Para poner tus fotos:
+## ✍️ Editar el vídeo
 
-1. Copia tus imágenes/vídeos en `public/photos/`.
-2. Abre `src/scenes.ts` y rellena el campo `image` de cada escena con la ruta
-   relativa a `public/`, por ejemplo:
+Todo el guion está en **`src/scenes.ts`**: orden de fotos, textos (`kicker`,
+`title`, `meta`), color de acento, layout (`full` | `card`), dirección del
+Ken Burns y duración de cada clip. Cambia ahí lo que quieras.
 
-   ```ts
-   {
-     image: 'photos/funchal.jpg',
-     title: 'Funchal',
-     subtitle: 'La capital, entre flores y mar',
-     ...
-   }
-   ```
-
-3. (Opcional) Pon música en `public/music.mp3` y descomenta el bloque
-   `<Audio ... />` en `src/MadeiraVideo.tsx`.
-
-Puedes cambiar libremente títulos, subtítulos, duración (`durationInFrames`),
-colores y la dirección del efecto Ken Burns (`'in' | 'out' | 'left' | 'right'`).
-
-## ⚙️ Render en entornos sin descarga de Chromium
-
-Si el entorno bloquea la descarga del navegador de Remotion, usa un Chromium ya
-instalado con `--browser-executable`:
-
-```bash
-npx remotion render Madeira out/madeira.mp4 \
-  --browser-executable=/ruta/a/chrome
-```
-
-> Nota: este proyecto usa **fuentes del sistema** (serif/sans) en lugar de
-> Google Fonts para no depender de la red durante el render.
+- **Añadir/cambiar fotos:** coloca los archivos en `public/photos/` y apunta el
+  campo `image` de cada clip a la ruta correspondiente.
+- **Reprocesar fotos** (orientación EXIF + optimización): edita el mapa en
+  `scripts/process-photos.mjs` y ejecuta `node scripts/process-photos.mjs`.
+- **Colores y tipografía:** `src/theme.ts`.
+- **Música (opcional):** pon `public/music.mp3` y añade en `src/MadeiraVideo.tsx`
+  `import {Audio} from 'remotion'` y `<Audio src={staticFile('music.mp3')} />`.
 
 ## 🗂️ Estructura
 
 ```
 src/
-  index.ts          # Punto de entrada (registerRoot)
+  index.ts          # registerRoot
   Root.tsx          # Composición "Madeira" (tamaño, fps, duración)
-  scenes.ts         # ⭐ Configura aquí tus escenas, fotos y textos
-  MadeiraVideo.tsx  # Lógica visual: Ken Burns, transiciones, intro/outro
-public/photos/      # Coloca aquí tu media
+  scenes.ts         # ⭐ Guion: secciones, clips, textos, tiempos
+  theme.ts          # Paleta y tipografía
+  graphics.tsx      # UI: tipografía cinética, chips, brackets, progreso, grano
+  MadeiraVideo.tsx  # Intro, secciones, clips (full/card), outro y montaje
+public/photos/      # Fotos (ya orientadas y optimizadas)
+scripts/
+  process-photos.mjs# Auto-orienta + optimiza las fotos de origen
 ```
+
+> Nota: usa **fuentes del sistema** (no Google Fonts) para que el render no
+> dependa de la red.
